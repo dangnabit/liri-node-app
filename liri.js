@@ -1,30 +1,86 @@
 const argv = require('argv');
 const fs = require('fs');
 const request = require('request');
+const Twitter = require('twitter');
+const spotify = require('spotify');
+
+
+
+// console.log(keys.twitterKeys.consumer_key);   
 
 const movieInfo = ['Title', 'Year', 'imdbRating', 'Country', 'Language', 'Plot', 'Actors']
 
 const args = argv.run().targets;
 
-console.log(args);
+const displayTweets = () => {
+    const keys = require('./keys.js');
+
+    const client = new Twitter(keys.twitterKeys);
+
+    const params = { screen_name: 'DGabel', count: 1 };
+    
+    client.get('statuses/user_timeline', params, (error, tweets, response) => {
+        
+        if (error) {
+            console.log('Something went wrong: ' + error);
+            return;
+        }
+
+        for (var i = 0; i < tweets.length; i++) {
+            console.log(tweets[i].created_at);
+            console.log(tweets[i].text);
+            console.log('');
+        }
+    });
+}
+
 
 const spotifyThisSong = (song) => {
-    console.log(song);
+    song = song.toString();
+
+    if (!song) {
+        song = "The Sign"
+    }
+
+    song.replace(/,/g, ' ');
+    // console.log(song);
+
+    spotify.search({ type: 'track', query: song }, (error, data) => {
+        if (error) {
+            console.log('Something went wrong: ' + error);
+            return;
+        }
+        console.log(data);
+        // Do something with 'data' 
+    });
 }
+
 
 const movieThis = (movie) => {
     movie = movie.toString();
-    movie.replace(/,/g, '+');
-    request('http://www.omdbapi.com/?t=' + movie, function(error, response, data) {
+    
+    if (!movie) {
+        movie = 'Mr. Nobody'
+    }
+
+    movie = movie.replace(/,/g, '+');
+    movie = movie.replace(/\./g, '');
+    // console.log(movie);
+
+    request('http://www.omdbapi.com/?t=' + movie, (error, response, data) => {
         if (error) {
             console.log('Something went wrong: ' + error);
-            console.log('Response: ' + response);
+            return;
         }
-        data = JSON.parse(data);
-        // console.log(JSON.stringify(data, null, 2));
-        for (var i = 0; i < movieInfo.length; i++) {
-        	const prop = movieInfo[i];
-            console.log(prop + ' ::: ' + data[prop]);
+        if (response.body !== '{"Response":"False","Error":"Movie not found!"}') {
+            data = JSON.parse(data);
+            // console.log(JSON.stringify(data, null, 2));
+            for (var i = 0; i < movieInfo.length; i++) {
+                const prop = movieInfo[i];
+                console.log(prop + ' :::: ' + data[prop]);
+            }
+        } else {
+            console.log("Movie not found. Please check your input.");
         }
     });
 }
