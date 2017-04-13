@@ -4,16 +4,17 @@ let request = require('request');
 let Twitter = require('twitter');
 let spotify = require('spotify');
 
+// caching wanted movie properties
 let movieInfo = ['Title', 'Year', 'imdbRating', 'Country', 'Language', 'Plot', 'Actors']
+
+// easier argument storage
 let args = argv.run().targets;
-
-
 
 let displayTweets = () => {
     // builds needed elements for Tweet getting
     let keys = require('./keys.js');
     let client = new Twitter(keys.twitterKeys);
-    let params = { screen_name: 'DGabel', count: 1 };
+    let params = { screen_name: 'DGabel', count: 20 };
 
     // Twitter API call with error checking
     client.get('statuses/user_timeline', params, (error, tweets, response) => {
