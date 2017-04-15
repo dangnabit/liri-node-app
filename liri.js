@@ -26,9 +26,10 @@ let displayTweets = () => {
 
         // posting tweets with date to the console
         for (var i = 0; i < tweets.length; i++) {
+            // console.log('*-_--_--_--_--_--_--_--_--_--_--_--_--_--_--_--_--_--_--_--_--_--_--_--_--_--_--_--_--_--_--_--_--_--_--_--_-*');
             console.log(tweets[i].created_at);
             console.log(tweets[i].text);
-            console.log('');
+            console.log('*-_--_--_--_--_--_--_--_--_--_--_--_--_--_--_--_--_--_--_--_--_--_--_--_--_--_--_--_--_--_--_--_--_--_--_--_-*');
         }
     });
 }
@@ -129,10 +130,9 @@ if (args[0] === 'do-what-it-says') {
 
         }
     });
-}
+    // checks the first argument for the key functions
 
-// checks the first argument for the key functions
-if (args[0] === 'my-tweets' || args[0] === 'spotify-this-song' || args[0] === 'movie-this' || args[0] === 'do-what-it-says') {
+}else if (args[0] === 'my-tweets' || args[0] === 'spotify-this-song' || args[0] === 'movie-this' || args[0] === 'do-what-it-says') {
 
     // sends the input down the chain, then parsing the remaining arguments and firing the correct function
     switch (args[0]) {
@@ -151,7 +151,6 @@ if (args[0] === 'my-tweets' || args[0] === 'spotify-this-song' || args[0] === 'm
             movieThis(movie);
             break;
     }
-
 } else {
-    console.log('Unexpected or unknown command. Please use "my-tweets" "spotify-this-song" "movie-this" or "do-what-it-says" to see my magic.')
+    console.log('Unexpected or unknown command. Please use "my-tweets" "spotify-this-song" "movie-this" or "do-what-it-says" to see my magic.');
 }
