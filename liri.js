@@ -39,7 +39,7 @@ let spotifyThisSong = (song) => {
 
     // sets default search if no song name was passed
     if (!song) {
-        song = "The Sign"
+        song = 'The Sign'
     }
 
     // cleaning up the commas from the argv parsing
@@ -52,6 +52,7 @@ let spotifyThisSong = (song) => {
             console.log('Something went wrong: ' + error);
             return;
         }
+        // console.log(data);
         console.log('Track: ' + data.tracks.items[0].name);
         console.log('Artist: ' + data.tracks.items[0].album.artists[0].name);
         console.log('Album: ' + data.tracks.items[0].album.name);
@@ -68,7 +69,7 @@ let movieThis = (movie) => {
 
     // sets default movie if no movie was passed 
     if (!movie) {
-        movie = 'Mr. Nobody'
+        movie = 'Mr. Nobody';
     }
     // cleaning the input of periods and commas, replacing them appropriately for the OMDB API
     movie = movie.replace(/,/g, '+');
